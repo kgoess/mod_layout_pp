@@ -13,10 +13,6 @@ t/01compile.t
 t/02simple.t
 t/03pod-cover.t
 t/03pod.t
-t/core.13524
-t/core.13537
-t/core.13810
-t/core.13823
 t/htdocs/cgi/test.pl
 t/htdocs/footer.html
 t/htdocs/head.html
