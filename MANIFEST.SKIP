@@ -1,6 +1,7 @@
 .releaserc
 .git
 .svn
+.swp
 .tar.gz
 Layout.bs
 Layout.c
