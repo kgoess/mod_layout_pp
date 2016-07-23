@@ -1,4 +1,5 @@
 .releaserc
+.git
 .svn
 .tar.gz
 Layout.bs

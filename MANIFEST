@@ -1,0 +1,23 @@
+Changes
+Changes.yml
+lib/Apache2/.Layout.pm.swp
+lib/Apache2/Layout.pm
+MANIFEST			This list of files
+MANIFEST.SKIP
+META.yml
+README
+t/00-signature.t
+t/01compile.t
+t/02simple.t
+t/03pod-cover.t
+t/03pod.t
+t/core.13524
+t/core.13537
+t/core.13810
+t/core.13823
+t/htdocs/cgi/test.pl
+t/htdocs/footer.html
+t/htdocs/head.html
+t/htdocs/header.html
+t/htdocs/large.html
+t/htdocs/simple.html
