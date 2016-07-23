@@ -12,7 +12,7 @@ MANIFEST.bak
 blib
 t/TEST
 t/conf/apache_test_config.pm
-t/conf/extra.conf
+t/conf/extra.conf$
 t/conf/httpd.conf
 t/conf/modperl_inc.pl
 t/conf/modperl_startup.pl
