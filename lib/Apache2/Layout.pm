@@ -18,7 +18,7 @@ use Apache2::Const -compile => qw(OK DECLINED);
 use strict;
 use warnings;
 
-our $VERSION = '0.6';
+our $VERSION = '0.6_1';
 
 sub handler {
     my ($f, $bb) = @_;
