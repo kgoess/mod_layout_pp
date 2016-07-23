@@ -23,6 +23,8 @@ DESCRIPTION
     Only documents with a content type of "text/html" are affected - all
     others are passed through unaltered.
 
+    This is a pure-perl handler, the XS code was removed.
+
 OPTIONS
     LayoutComments
         Inserts HTML comments in the output, marking where inserted content
