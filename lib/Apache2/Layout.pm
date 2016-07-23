@@ -20,9 +20,6 @@ use warnings;
 
 our $VERSION = '0.6';
 
-use XSLoader;
-XSLoader::load __PACKAGE__, $VERSION;
-
 sub handler {
     my ($f, $bb) = @_;
 
@@ -152,7 +149,6 @@ sub handler {
 
                 $context->{tests}++ if $context->{debug};
                 if ($data =~ m{(.*)($pat)(.*)}si) {
-
                     #We match each tag only once, and in order, so roll over to the next match
                     $context->{current_tag} = shift @{$context->{tags}};
 
@@ -216,7 +212,7 @@ sub _inject {
 
     my $rv = $f->next->pass_brigade($bb_ctx);
     return $rv unless $rv == APR::Const::SUCCESS;
-    $rv = _call($url, $r, $f);    #XXX: move back to perl land
+    $rv = _call_pp($url, $r, $f);    #XXX: move back to perl land
     return $rv unless $rv == APR::Const::SUCCESS;
     $bb_ctx->insert_tail(
              APR::Bucket->new($bb_ctx->bucket_alloc, "<!-- $url END -->\n"))
@@ -224,17 +220,24 @@ sub _inject {
     return $rv;
 }
 
-use Apache2::SubRequest ();
+#use Apache2::SubRequest ();
+#
+#my $call = \&_call_xs;
+#sub _call {
+#   return $call->(@_); 
+#}
 
-my $call = \&_call_xs;
-sub _call {
-   return $call->(@_); 
-}
 
+
+# This Pure-perl code now works, after the bug was fixed in 
+# mod_perl 2.0.4 (r607687)
+# https://mail-archives.apache.org/mod_mbox/perl-modperl-cvs/200712.mbox/%3C20071231064858.EA2BF1A9842@eris.apache.org%3E
+# 2.0.4 April 16, 2008
+#    Fix a crash when running a sub-request from within a filter where mod_perl was not the content handler. [Gozer]
 sub _call_pp {
     my ($url, $r, $f) = @_;
-    # This Pure-perl code would work, if not for a bug in mod_perl
-    # mod_perl 2.0.4 will be fixed (r607687)
+
+
     my $subr = $r->lookup_uri($url, $f->next);
     my $rc = $subr->run;
 
