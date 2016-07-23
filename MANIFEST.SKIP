@@ -6,7 +6,9 @@
 Layout.bs
 Layout.c
 Layout.o
-Makefile
+Makefile$
+Makefile.old
+MANIFEST.bak
 blib
 t/TEST
 t/conf/apache_test_config.pm
