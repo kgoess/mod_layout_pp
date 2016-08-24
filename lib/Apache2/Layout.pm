@@ -118,7 +118,7 @@ sub handler {
 
         if ($bucket->is_eos) {
             if ($context->{debug} && $context->{matched}) {
-		my $ver = __PACKAGE__ . " v$VERSION";
+                my $ver = __PACKAGE__ . " v$VERSION";
                 my $msg =
                   "$ver matched $context->{matched} times out of $context->{tests} over $context->{reads} reads and $context->{pass} passes";
                 if ($context->{comments}) {
@@ -212,7 +212,7 @@ sub _inject {
 
     my $rv = $f->next->pass_brigade($bb_ctx);
     return $rv unless $rv == APR::Const::SUCCESS;
-    $rv = _call_pp($url, $r, $f);    #XXX: move back to perl land
+    $rv = _call_pp($url, $r, $f);   # this used to be the xs call 
     return $rv unless $rv == APR::Const::SUCCESS;
     $bb_ctx->insert_tail(
              APR::Bucket->new($bb_ctx->bucket_alloc, "<!-- $url END -->\n"))
