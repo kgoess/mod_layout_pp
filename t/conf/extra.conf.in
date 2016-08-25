@@ -4,7 +4,7 @@ Alias /simple @DocumentRoot@
 Alias /raw @DocumentRoot@
 LogLevel debug
 <Location /simple>
-  #AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/html
   PerlOutputFilterHandler Apache2::Layout
   PerlSetVar LayoutFooter /footer.html
   PerlSetVar LayoutHeader /header.html
@@ -18,7 +18,7 @@ LogLevel debug
 
 ScriptAlias /cgi @DocumentRoot@/cgi
 <Location /cgi>
-  #AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/html
   PerlOutputFilterHandler Apache2::Layout
   PerlSetVar LayoutFooter /footer.html
   PerlSetVar LayoutHeader /header.html
@@ -29,7 +29,7 @@ ScriptAlias /cgi @DocumentRoot@/cgi
 
 <Location /dir>
  Options +Indexes +Includes
- #AddOutputFilterByType INCLUDES;DEFLATE text/html
+ AddOutputFilterByType INCLUDES;DEFLATE text/html
  PerlOutputFilterHandler Apache2::Layout
  PerlSetVar LayoutFooter /footer.html
  PerlSetVar LayoutHeader /header.html
