@@ -11,6 +11,8 @@ LogLevel debug
   PerlSetVar LayoutCSS /head.html
   PerlSetVar LayoutComments On
   PerlSetVar LayoutDebug On
+  PerlSetVar LayoutIgnoreURI /simple/headers-ignore-1.html
+  PerlAddVar LayoutIgnoreURI /simple/headers-ignore-2.html
   Options +Indexes
 </Location>
 

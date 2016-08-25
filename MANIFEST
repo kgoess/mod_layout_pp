@@ -20,3 +20,5 @@ t/htdocs/head.html
 t/htdocs/header.html
 t/htdocs/large.html
 t/htdocs/simple.html
+t/htdocs/headers-ignore-1.html
+t/htdocs/headers-ignore-2.html

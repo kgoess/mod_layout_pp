@@ -18,7 +18,7 @@ use Apache2::Const -compile => qw(OK DECLINED);
 use strict;
 use warnings;
 
-our $VERSION = '0.6_1';
+our $VERSION = '0.7';
 
 sub handler {
     my ($f, $bb) = @_;
@@ -87,6 +87,7 @@ sub handler {
                 insert  => 'before',
               };
         }
+        my @ignore_urls = $r->dir_config->get('LayoutIgnoreURI');
 
         unless (@tags) {
             $log->debug('skipping request to ',
@@ -96,6 +97,7 @@ sub handler {
 
         $context->{current_tag} = shift @tags;
         $context->{tags}        = \@tags;
+        $context->{ignore_urls} = \@ignore_urls;
 
         # output filters that alter content are responsible for removing
         # the Content-Length header, but we only need to do this once.
@@ -109,6 +111,13 @@ sub handler {
     }
 
     my $tags = $context->{tags};
+
+    my $this_uri = $r->uri;
+    if (grep { $_ eq $this_uri } @{$context->{ignore_urls}}){ # wtb ~~ in perl 5.10
+        $log->debug('skipping request to ',
+                     $r->uri, ' (is in list of ignore urls)');
+        return Apache2::Const::DECLINED;
+    }
 
     my $bb_ctx = APR::Brigade->new($f->c->pool, $f->c->bucket_alloc);
 
@@ -324,6 +333,14 @@ typically used to inject the end of a content wrapper into the document.
   PerlSetVar LayoutHeader /templates/footer.html
 
 LayoutFooter has no default.
+
+=item LayoutIgnoreURI
+
+Say you *don't* want to mangle foo.html and bar.html, but you do want
+to apply headers to everything else in the directory:
+
+    PerlSetVar LayoutIgnoreURI /thisdir/foo.html
+    PerlAddVar LayoutIgnoreURI /thisdir/bar.html
 
 =back
 
