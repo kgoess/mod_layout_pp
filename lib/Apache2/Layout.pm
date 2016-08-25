@@ -18,7 +18,7 @@ use Apache2::Const -compile => qw(OK DECLINED);
 use strict;
 use warnings;
 
-our $VERSION = '0.6_1';
+our $VERSION = '0.7';
 
 sub handler {
     my ($f, $bb) = @_;
@@ -112,7 +112,6 @@ sub handler {
 
     my $tags = $context->{tags};
 
-$log->debug("ignore_urls is @{ $context->{ignore_urls} } and this url is ".$r->uri);
     if ($r->uri ~~ $context->{ignore_urls}){
         $log->debug('skipping request to ',
                      $r->uri, ' (is in list of ignore urls)');

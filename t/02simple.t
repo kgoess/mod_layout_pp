@@ -29,7 +29,6 @@ foreach my $url (@urls) {
 
     ok $content;
     ok t_cmp(200, $content->code, "Check that the request was OK");
-print STDERR "loading url $url\n";
     my $html = $content->content;
 
     ok t_cmp($html, qr[This is the css],    "LayoutCSS found");
