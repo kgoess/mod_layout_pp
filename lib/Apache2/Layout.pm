@@ -112,7 +112,8 @@ sub handler {
 
     my $tags = $context->{tags};
 
-    if ($r->uri ~~ $context->{ignore_urls}){
+    my $this_uri = $r->uri;
+    if (grep { $_ eq $this_uri } @{$context->{ignore_urls}}){ # wtb ~~ in perl 5.10
         $log->debug('skipping request to ',
                      $r->uri, ' (is in list of ignore urls)');
         return Apache2::Const::DECLINED;
