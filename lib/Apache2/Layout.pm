@@ -113,7 +113,7 @@ sub handler {
     my $tags = $context->{tags};
 
 $log->debug("ignore_urls is @{ $context->{ignore_urls} } and this url is ".$r->uri);
-    if ($r ~~ $context->{ignore_urls}){
+    if ($r->uri ~~ $context->{ignore_urls}){
         $log->debug('skipping request to ',
                      $r->uri, ' (is in list of ignore urls)');
         return Apache2::Const::DECLINED;

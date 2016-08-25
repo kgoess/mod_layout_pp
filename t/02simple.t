@@ -47,5 +47,5 @@ foreach my $url (@ignore_urls){
     ok t_cmp(200, $content->code, "Check that the request was OK");
     my $html = $content->content;
 
-    ok ! t_cmp($html, qr[This is the header], "LayoutHeader found");
+    ok ! t_cmp($html, qr[This is the header], "LayoutHeader was ignored");
 }
