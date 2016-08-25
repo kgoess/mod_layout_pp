@@ -87,6 +87,7 @@ sub handler {
                 insert  => 'before',
               };
         }
+        my @ignore_urls = $r->dir_config->get('LayoutIgnoreURI');
 
         unless (@tags) {
             $log->debug('skipping request to ',
@@ -96,6 +97,7 @@ sub handler {
 
         $context->{current_tag} = shift @tags;
         $context->{tags}        = \@tags;
+        $context->{ignore_urls} = \@ignore_urls;
 
         # output filters that alter content are responsible for removing
         # the Content-Length header, but we only need to do this once.
@@ -109,6 +111,13 @@ sub handler {
     }
 
     my $tags = $context->{tags};
+
+$log->debug("ignore_urls is @{ $context->{ignore_urls} } and this url is ".$r->uri);
+    if ($r ~~ $context->{ignore_urls}){
+        $log->debug('skipping request to ',
+                     $r->uri, ' (is in list of ignore urls)');
+        return Apache2::Const::DECLINED;
+    }
 
     my $bb_ctx = APR::Brigade->new($f->c->pool, $f->c->bucket_alloc);
 
