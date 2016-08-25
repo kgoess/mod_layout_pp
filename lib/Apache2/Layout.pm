@@ -334,6 +334,14 @@ typically used to inject the end of a content wrapper into the document.
 
 LayoutFooter has no default.
 
+=item LayoutIgnoreURI
+
+Say you *don't* want to mangle foo.html and bar.html, but you do want
+to apply headers to everything else in the directory:
+
+    PerlSetVar LayoutIgnoreURI /thisdir/foo.html
+    PerlAddVar LayoutIgnoreURI /thisdir/bar.html
+
 =back
 
 =head1 API
