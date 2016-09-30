@@ -15,10 +15,12 @@ use APR::Const -compile => qw(SUCCESS);
 
 use Apache2::Const -compile => qw(OK DECLINED);
 
+use Text::Glob qw( glob_to_regex );
+
 use strict;
 use warnings;
 
-our $VERSION = '0.7';
+our $VERSION = '0.8';
 
 sub handler {
     my ($f, $bb) = @_;
@@ -97,7 +99,7 @@ sub handler {
 
         $context->{current_tag} = shift @tags;
         $context->{tags}        = \@tags;
-        $context->{ignore_urls} = \@ignore_urls;
+        $context->{ignore_urls} = [ map { glob_to_regex($_) } @ignore_urls ];
 
         # output filters that alter content are responsible for removing
         # the Content-Length header, but we only need to do this once.
@@ -113,10 +115,16 @@ sub handler {
     my $tags = $context->{tags};
 
     my $this_uri = $r->uri;
-    if (grep { $_ eq $this_uri } @{$context->{ignore_urls}}){ # wtb ~~ in perl 5.10
-        $log->debug('skipping request to ',
-                     $r->uri, ' (is in list of ignore urls)');
-        return Apache2::Const::DECLINED;
+$log->warn("this_uri is $this_uri");
+    # put patterns into a separate list
+    # put this whole bit into a subroutine
+    foreach my $pattern (@{$context->{ignore_urls}}){
+$log->warn("looking at pattern $pattern");
+	if ($this_uri =~ /$pattern/){
+            $log->warn('skipping request to ',
+                         $r->uri, ' (is in list of ignore urls)');
+            return Apache2::Const::DECLINED;
+	}
     }
 
     my $bb_ctx = APR::Brigade->new($f->c->pool, $f->c->bucket_alloc);
@@ -253,6 +261,7 @@ sub _call_pp {
     return $rc;
 }
 
+no warnings;
 42;
 
 __END__
@@ -342,6 +351,11 @@ to apply headers to everything else in the directory:
     PerlSetVar LayoutIgnoreURI /thisdir/foo.html
     PerlAddVar LayoutIgnoreURI /thisdir/bar.html
 
+Note the difference between SetVar and AddVar. You can only have one Set, but
+as many Adds as you need.
+
+Wildcards are supported via Text::Glob.
+
 =back
 
 =head1 API
@@ -360,10 +374,11 @@ platforms or environments.
 
 =head1 SEE ALSO
 
-perl(1), mod_perl(3), Apache(3), mod_layout
+perl(1), mod_perl(3), Apache(3), mod_layout, Text::Glob
 
 =head1 AUTHOR
 
+Kevin M. Goess E<lt>cpan@goess.orgE<gt>
 Philippe M. Chiasson E<lt>gozer@ectoplasm.orgE<gt>
 
 =head1 REPOSITORY

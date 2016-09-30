@@ -69,6 +69,17 @@ OPTIONS
 
         LayoutFooter has no default.
 
+    LayoutIgnoreURI
+        Say you *don't* want to mangle foo.html and bar.html, but you do
+        want to apply headers to everything else in the directory:
+
+            PerlSetVar LayoutIgnoreURI /thisdir/foo.html
+            PerlAddVar LayoutIgnoreURI /thisdir/bar*.html
+
+	Notice the AddVar--you can only do SetVar once.
+
+	Wildcards are supported via Text::Glob.
+
 API
   handler
     This is the one and only user-visible function, it's the main filter
@@ -81,7 +92,7 @@ NOTES
     platforms or environments.
 
 SEE ALSO
-    perl(1), mod_perl(3), Apache(3), mod_layout
+    perl(1), mod_perl(3), Apache(3), mod_layout, Text::Glob
 
 AUTHOR
     Philippe M. Chiasson <gozer@ectoplasm.org>

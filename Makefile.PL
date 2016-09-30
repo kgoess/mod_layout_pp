@@ -34,6 +34,7 @@ ModPerl::MM::WriteMakefile(
     PREREQ_PM => {
                   mod_perl2    => 0,
                   'Test::More' => 0,
+                  'Text::Glob' => 0.09,
                  },
     @extra,
 );
