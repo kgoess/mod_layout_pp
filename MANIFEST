@@ -22,3 +22,8 @@ t/htdocs/large.html
 t/htdocs/simple.html
 t/htdocs/headers-ignore-1.html
 t/htdocs/headers-ignore-2.html
+t/htdocs/wildcards/changeme.html
+t/htdocs/wildcards/ignoreme.html
+t/htdocs/wildcards/index-blah.html
+t/htdocs/wildcards/index.html
+t/htdocs/wildcards/index.phtml
