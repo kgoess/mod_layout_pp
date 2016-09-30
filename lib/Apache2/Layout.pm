@@ -115,13 +115,11 @@ sub handler {
     my $tags = $context->{tags};
 
     my $this_uri = $r->uri;
-$log->warn("this_uri is $this_uri");
     # put patterns into a separate list
     # put this whole bit into a subroutine
     foreach my $pattern (@{$context->{ignore_urls}}){
-$log->warn("looking at pattern $pattern");
 	if ($this_uri =~ /$pattern/){
-            $log->warn('skipping request to ',
+            $log->debug('skipping request to ',
                          $r->uri, ' (is in list of ignore urls)');
             return Apache2::Const::DECLINED;
 	}
