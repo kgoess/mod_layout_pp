@@ -76,9 +76,10 @@ OPTIONS
             PerlSetVar LayoutIgnoreURI /thisdir/foo.html
             PerlAddVar LayoutIgnoreURI /thisdir/bar*.html
 
-	Notice the AddVar--you can only do SetVar once.
+        Note the difference between SetVar and AddVar. You can only have one
+        Set, but as many Adds as you need.
 
-	Wildcards are supported via Text::Glob.
+        Wildcards are supported via Text::Glob.
 
 API
   handler
@@ -95,7 +96,8 @@ SEE ALSO
     perl(1), mod_perl(3), Apache(3), mod_layout, Text::Glob
 
 AUTHOR
-    Philippe M. Chiasson <gozer@ectoplasm.org>
+    Kevin M. Goess <cpan@goess.org> Philippe M. Chiasson
+    <gozer@ectoplasm.org>
 
 REPOSITORY
     http://svn.ectoplasm.org/projects/perl/Apache2-Layout/trunk/

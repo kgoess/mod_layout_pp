@@ -25,6 +25,9 @@ my @ignore_urls = qw(
     /wildcards/index-blah.html
     /wildcards/index.html
     /wildcards/index.phtml
+    /wildcards/
+    /no-strict/slash/
+    /no-strict/slash/index.html
 );
 
 plan tests => 6 * scalar(@urls) + 3 * scalar(@ignore_urls);

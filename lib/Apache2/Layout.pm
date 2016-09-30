@@ -16,6 +16,7 @@ use APR::Const -compile => qw(SUCCESS);
 use Apache2::Const -compile => qw(OK DECLINED);
 
 use Text::Glob qw( glob_to_regex );
+$Text::Glob::strict_wildcard_slash = 0;
 
 use strict;
 use warnings;
@@ -292,6 +293,8 @@ to existing HTML content without needing to change them.
 Only documents with a content type of "text/html" are affected - all
 others are passed through unaltered.
 
+This is a pure-perl handler, the XS code was removed.
+
 =head1 OPTIONS
 
 =over 4
@@ -347,7 +350,7 @@ Say you *don't* want to mangle foo.html and bar.html, but you do want
 to apply headers to everything else in the directory:
 
     PerlSetVar LayoutIgnoreURI /thisdir/foo.html
-    PerlAddVar LayoutIgnoreURI /thisdir/bar.html
+    PerlAddVar LayoutIgnoreURI /thisdir/bar*.html
 
 Note the difference between SetVar and AddVar. You can only have one Set, but
 as many Adds as you need.

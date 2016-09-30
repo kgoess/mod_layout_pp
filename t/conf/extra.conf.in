@@ -49,3 +49,13 @@ ScriptAlias /cgi @DocumentRoot@/cgi
   PerlSetVar LayoutIgnoreURI /wildcards/index*.html
   PerlAddVar LayoutIgnoreURI /wildcards/ignoreme*
 </Location>
+
+<Location /no-strict/slash >
+  PerlOutputFilterHandler Apache2::Layout
+  PerlSetVar LayoutHeader /header.html
+  PerlSetVar LayoutFooter /footer.html
+  PerlSetVar LayoutCSS /head.html
+  PerlSetVar LayoutComments On
+  PerlSetVar LayoutDebug On
+  PerlSetVar LayoutIgnoreURI /no-stri*
+</Location>

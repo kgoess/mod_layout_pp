@@ -24,7 +24,7 @@ EOF
 # now, write out the Makefile
 ModPerl::MM::WriteMakefile(
     NAME          => 'Apache2::Layout',
-    AUTHOR        => 'Philippe M. Chiasson <gozer@ectoplasm.org>',
+    AUTHOR        => [ 'Kevin M. Goess <cpan@goess.org>', 'Philippe M. Chiasson <gozer@ectoplasm.org>'],
     #SIGN          => 1,
     #LICENSE       => 'perl',
     VERSION_FROM  => 'lib/Apache2/Layout.pm',

@@ -27,3 +27,5 @@ t/htdocs/wildcards/ignoreme.html
 t/htdocs/wildcards/index-blah.html
 t/htdocs/wildcards/index.html
 t/htdocs/wildcards/index.phtml
+t/htdocs/no-strict/slash/index.html
+
