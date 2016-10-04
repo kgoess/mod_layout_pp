@@ -14,12 +14,17 @@ BEGIN {
 use Apache::TestRequest;
 
 my @urls = qw(
-/simple/simple.html
-/cgi/test.pl
+    /simple/simple.html
+    /cgi/test.pl
+    /wildcards/changeme.html
 );
 my @ignore_urls = qw(
     /simple/headers-ignore-1.html
     /simple/headers-ignore-2.html
+    /wildcards/ignoreme.html
+    /wildcards/index-blah.html
+    /wildcards/index.html
+    /wildcards/index.phtml
 );
 
 plan tests => 6 * scalar(@urls) + 3 * scalar(@ignore_urls);
