@@ -113,6 +113,27 @@ sub handler {
     my $tags = $context->{tags};
 
     my $this_uri = $r->uri;
+    # put patterns into a separate list
+    # put this whole bit into a subroutine
+    foreach my $pattern (@{$context->{ignore_urls}}){
+        if (index($pattern, '*') == -1){
+            if ($this_uri eq $pattern){
+                $log->debug('skipping request to ',
+                             $r->uri, ' (is in list of ignore urls)');
+                return Apache2::Const::DECLINED;
+            }
+        }else{
+            $pattern =~ s/\*/\E.*?\Q/g;
+            $pattern = '\Q' . $pattern . '\E';
+            if ($this_uri =~ /$pattern/){
+                $log->debug('skipping request to ',
+                             $r->uri, ' (is in list of ignore urls)');
+                return Apache2::Const::DECLINED;
+            }
+        }
+    }
+                
+        
     if (grep { $_ eq $this_uri } @{$context->{ignore_urls}}){ # wtb ~~ in perl 5.10
         $log->debug('skipping request to ',
                      $r->uri, ' (is in list of ignore urls)');
@@ -342,6 +363,9 @@ to apply headers to everything else in the directory:
     PerlSetVar LayoutIgnoreURI /thisdir/foo.html
     PerlAddVar LayoutIgnoreURI /thisdir/bar.html
 
+Note the difference between SetVar and AddVar. You can only have one Set, but
+as many Adds as you need.
+
 =back
 
 =head1 API
@@ -364,6 +388,7 @@ perl(1), mod_perl(3), Apache(3), mod_layout
 
 =head1 AUTHOR
 
+Kevin M. Goess E<lt>cpan@goess.orgE<gt>
 Philippe M. Chiasson E<lt>gozer@ectoplasm.orgE<gt>
 
 =head1 REPOSITORY

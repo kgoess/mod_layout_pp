@@ -13,6 +13,7 @@ LogLevel debug
   PerlSetVar LayoutDebug On
   PerlSetVar LayoutIgnoreURI /simple/headers-ignore-1.html
   PerlAddVar LayoutIgnoreURI /simple/headers-ignore-2.html
+  PerlAddVar LayoutIgnoreURI /simple/headers-ignore-2.html
   Options +Indexes
 </Location>
 
@@ -36,4 +37,13 @@ ScriptAlias /cgi @DocumentRoot@/cgi
  PerlSetVar LayoutCSS /head.html
  PerlSetVar LayoutComments On
  PerlSetVar LayoutDebug On
+</Location>
+
+<Location /wildcards >
+  PerlOutputFilterHandler Apache2::Layout
+  PerlSetVar LayoutHeader /header.html
+  PerlSetVar LayoutComments On
+  PerlSetVar LayoutDebug On
+  PerlSetVar LayoutIgnoreURI /wildcards/index*.html
+  PerlAddVar LayoutIgnoreURI /wildcards/ignoreme*
 </Location>
